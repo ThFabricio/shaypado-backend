@@ -6,7 +6,7 @@
 2. Clone the repository
 3. Run `npm install` to install the dependencies
 4. Run `npm start` to start the server
-5. Opitonal: Install Docker and run `docker-compose up` to start the database
+5. Opitonal: Install Docker, in between docker and run `docker-compose up` to start the database
 
 ## Project Structure
 
