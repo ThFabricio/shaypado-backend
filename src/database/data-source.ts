@@ -1,8 +1,7 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 import "dotenv/config";
-import { UnderlyingByteSource } from "stream/web";
-import { parse } from "path";
+
 
 const port: string | undefined = process.env.DB_PORT;
 
@@ -15,7 +14,7 @@ export const AppDataSource = new DataSource({
     database: process.env.DB_NAME,
     synchronize: true,
     logging: false,
-    entities: [],
-    migrations: [],
+    entities: ["src/database/entities/*.ts"],
+    migrations: ["src/database/migrations/*.ts"],
     subscribers: [],
 })
