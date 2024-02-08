@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, PrimaryColumn, Entity, PrimaryGeneratedColumn, ManyToMany, JoinColumn, ManyToOne } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { WorkoutType } from './WorkouType';
+import { User } from './User';
 
 @Entity('workout')
 export class Workout {
@@ -23,6 +24,9 @@ export class Workout {
         @ManyToOne(() => WorkoutType, workoutType => workoutType.id)
         workoutType: WorkoutType | null;
 
+        @ManyToOne(() => User, user => user.id)
+        user: User | null;
+
         constructor() {
             this.id = uuid();
             this.name = '';
@@ -30,5 +34,6 @@ export class Workout {
             this.end_hour = '';
             this.day = '';
             this.workoutType = null;
+            this.user = null;
         }
     }
