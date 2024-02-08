@@ -1,14 +1,15 @@
 import { Request, Response } from 'express';
 import { WorkoutService } from '../services/WorkoutService';
 import { Workout } from '../database/entities/Workout';
+import { WorkoutDTO } from '../database/dto/WorkoutDTO';
 
 const workoutService = new WorkoutService();
 
-export const createWorkout = async (req: Request, res: Response) => {
+export const createWorkout = async (req: WorkoutDTO, res: Response) => {
     console.log('createWorkout');
-    console.log(req.body);
+    console.log(req);
     try {
-        const workout = await workoutService.createWorkout(req.body);
+        const workout = await workoutService.createWorkout(req);
         res.status(201).json(workout);
     } catch (error) {
         res.status(500).json({ error: 'Failed to create workout' });

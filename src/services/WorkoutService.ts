@@ -1,14 +1,15 @@
 import { Workout } from "../database/entities/Workout";
 import { AppDataSource } from '../database/data-source';
 import { WorkoutType } from "../database/entities/WorkouType";
+import { WorkoutDTO } from "../database/dto/WorkoutDTO";
 
 
 export class WorkoutService {
     private workoutRepository = AppDataSource.getRepository(Workout);
     private workoutTypeRepository = AppDataSource.getRepository(WorkoutType);
 
-    async createWorkout(workoutData: Partial<Workout>): Promise<Workout> {
-        const workoutType = await this.workoutTypeRepository.findOne({ where: { id: workoutData.workoutType?.id } });
+    async createWorkout(workoutData: WorkoutDTO): Promise<Workout> {
+        const workoutType = await this.workoutTypeRepository.findOne({ where: { id: workoutData.workoutType } });
 
         const newWorkout = new Workout();
         newWorkout.name = workoutData.name ?? '';
