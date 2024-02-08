@@ -67,6 +67,7 @@ export class CreateUserTable1707177932270 implements MigrationInterface {
                 ]
             })
         );
+
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
