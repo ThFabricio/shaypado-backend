@@ -5,6 +5,7 @@ export interface WorkoutDTO {
     end_hour: string;
     day: string;
     workoutType: string;
+    user: string;
 }
 
 

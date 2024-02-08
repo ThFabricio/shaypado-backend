@@ -37,6 +37,11 @@ export class CreateWorkoutTable1707339003194 implements MigrationInterface {
                         type: "uuid",
                         isNullable: false
                     },
+                    {
+                        name: "user_id",
+                        type: "uuid",  
+                        isNullable: false
+                    },
                 ],
                 foreignKeys: [
                     {
@@ -44,9 +49,14 @@ export class CreateWorkoutTable1707339003194 implements MigrationInterface {
                         referencedTableName: "workout_type",
                         referencedColumnNames: ["id"],
                         columnNames: ["workout_type_id"],
+                    },
+                    {
+                        name: "FKUser",
+                        referencedTableName: "users", 
+                        referencedColumnNames: ["id"],
+                        columnNames: ["user_id"],
                     }
-                ]
-
+                ],
             })
         );
     }
