@@ -1,15 +1,18 @@
 import { Request, Response } from 'express';
 import { UserService } from '../services/UserService';
-import { User } from '../database/entities/User';
+import { RegisterRequestDTO } from '../database/dto/AuthenticationDTO';
 
 const userService = new UserService();
 
-export const createUser = async (req: Request, res: Response) => {
-    console.log('createUser');
-    console.log(req.body);
+export const createUser = async (req: RegisterRequestDTO, res: Response) => {
     try {
-        const user = await userService.createUser(req.body);
+        const exist = await userService.getUserByEmail(req.email);
+        if (exist) {
+            return res.status(400).json({ message: 'User already exists' });
+        } 
+        const user = await userService.createUser(req);
         res.status(201).json(user);
+        
     } catch (error) {
         res.status(500).json({ error: 'Failed to create user' });
     }
@@ -63,5 +66,19 @@ export const deleteUser = async (req: Request, res: Response) => {
         }
     } catch (error) {
         res.status(500).json({ error: 'Failed to delete user' });
+    }
+};
+
+export const login = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    try {
+        const user = await userService.login(email, password);
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to login' });
     }
 };

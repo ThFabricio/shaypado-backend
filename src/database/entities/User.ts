@@ -9,50 +9,30 @@ export class User {
     id: string;
 
     @Column()
-    name: string;
+    name?: string;
 
     @Column()
-    email: string;
+    email?: string;
 
     @Column()
-    password: string;
+    password?: string;
 
     @Column()
-    userType: string;
+    userType?: string;
 
     @Column()
-    weigth: string;
+    weigth?: string;
 
     @Column()
-    height: string;
+    height?: string;
 
     @Column()
-    workoutDays: string;
+    workoutDays?: string;
 
     @Column()
-    any_disease: string;
-
-    @CreateDateColumn()
-    created_at: Date;
-
-    @CreateDateColumn()
-    updated_at: Date;
-
-    @CreateDateColumn()
-    deleted_at: Date;
+    any_disease?: string;
 
     constructor() {
         this.id = uuid();
-        this.name = '';
-        this.email = '';
-        this.password = '';
-        this.userType = '';
-        this.weigth = '';
-        this.height = '';
-        this.workoutDays = '';
-        this.any_disease = ''; // Defina o valor padrão ou deixe vazio, dependendo do requisito
-        this.created_at = new Date();
-        this.updated_at = new Date();
-        this.deleted_at = new Date();
     }
 };

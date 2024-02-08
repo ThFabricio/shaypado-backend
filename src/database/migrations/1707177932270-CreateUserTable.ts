@@ -48,21 +48,6 @@ export class CreateUserTable1707177932270 implements MigrationInterface {
                     {
                         name: "any_disease",
                         type: "varchar"
-                    },
-                    {
-                        name: "created_at",
-                        type: "timestamp",
-                        default: "now()"
-                    },
-                    {
-                        name: "updated_at",
-                        type: "timestamp",
-                        isNullable: true
-                    },
-                    {
-                        name: "deleted_at",
-                        type: "timestamp",
-                        isNullable: true
                     }
                 ]
             })
