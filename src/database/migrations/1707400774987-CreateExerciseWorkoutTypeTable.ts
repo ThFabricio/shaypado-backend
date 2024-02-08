@@ -8,11 +8,6 @@ export class CreateExerciseWorkoutTypeTable1707400774987 implements MigrationInt
                 name: "exercise_workout_type",
                 columns: [
                     {
-                        name: "id",
-                        type: "uuid",
-                        isPrimary: true,
-                    },
-                    {
                         name: "exercise_id",
                         type: "uuid",
                         isNullable: false

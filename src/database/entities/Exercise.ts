@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
+import { v4 as uuid } from 'uuid';
 
 @Entity('exercise')
 export class Exercise {
@@ -23,7 +24,7 @@ export class Exercise {
     user: User | null;
 
     constructor() {
-        this.id = '';
+        this.id = uuid();
         this.name = '';
         this.series = 0;
         this.repetitions = 0;
