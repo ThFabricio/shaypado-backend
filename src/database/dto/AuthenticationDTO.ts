@@ -25,3 +25,9 @@ export interface LoginResponseDTO {
     message: string;
     acessToken?: string;
 };
+
+export interface acessTokenDTO {
+    id: string;
+    email: string;
+    userType: string;
+};

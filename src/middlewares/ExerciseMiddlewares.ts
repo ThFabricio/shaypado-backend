@@ -1,11 +1,11 @@
 import { RequestHandler } from 'express';
-import { ExerciseDTO } from '../database/dto/ExerciseDTO';
+import { ExerciseCreateRequestDTO } from '../database/dto/ExerciseDTO';
 
 export class ExerciseMiddlewares {
     public validateCreateExercise: RequestHandler = async (req, res, next) => {
-        let exercise = <ExerciseDTO> req.body;
+        let exercise = <ExerciseCreateRequestDTO> req.body;
+        req.body.userId = req.headers.userId;
         req.body = exercise;
         next();
-        
     }
 }

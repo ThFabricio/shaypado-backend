@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import Joi from 'joi';
-import { RegisterRequestDTO } from '../database/dto/AuthenticationDTO';
+import { RegisterRequestDTO, acessTokenDTO } from '../database/dto/AuthenticationDTO';
+import * as jwt from "jsonwebtoken";
 
 export class AuthenticationValidation {
 
@@ -44,6 +45,27 @@ export class AuthenticationValidation {
         }).catch((err) => {
             res.status(400).send({ message: err.details });
         });
+    };
+
+    public validateToken: RequestHandler = async (req, res, next) => {
+        const authHeader = <string>req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1];
+        if (!token) {
+            return res.status(401).send({ message: 'Token not found' });
+        }
+        try {
+            if (process.env.JWT_SECRET) {
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                req.headers.userId = (<acessTokenDTO>decoded).id;
+                req.headers.userType = (<acessTokenDTO>decoded).userType;
+                req.headers.email = (<acessTokenDTO>decoded).email;
+                next();
+            } else {
+                return res.status(500).send({ message: 'Access token secret not found' });
+            }
+        } catch (err) {
+            return res.status(401).send({ message: 'Invalid token' });
+        }
     };
 };
 

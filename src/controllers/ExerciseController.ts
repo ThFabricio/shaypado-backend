@@ -1,12 +1,10 @@
 import { Request, Response } from 'express';
 import { ExerciseService } from '../services/ExerciseService';
-import { ExerciseDTO } from '../database/dto/ExerciseDTO';
+import { ExerciseCreateRequestDTO } from '../database/dto/ExerciseDTO';
 
 const exerciseService = new ExerciseService();
 
-export const createExercise = async (req: ExerciseDTO, res: Response) => {
-    console.log('createExercise');
-    console.log(req);
+export const createExercise = async (req: ExerciseCreateRequestDTO, res: Response) => {
     try {
         const exercise = await exerciseService.createExercise(req);
         res.status(201).json(exercise);
@@ -66,4 +64,13 @@ export const deleteExercise = async (req: Request, res: Response) => {
     }
 }
 
+export const getAllExercisesByUser = async (req: Request, res: Response) => {
+    const userId = req.params.userId;
+    try {
+        const exercises = await exerciseService.getAllExercisesByUser(userId);
+        res.json(exercises);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch exercises' });
+    }
+}
 
