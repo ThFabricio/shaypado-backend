@@ -32,6 +32,7 @@ router.get('/',
 router.get('/:id', getExerciseById);
 router.put('/:id', updateExercise);
 router.delete('/:id', deleteExercise);
+router.get('/user/:id', getAllExercises);
 
 export default router;
 

@@ -1,6 +1,8 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
 import { v4 as uuid } from 'uuid';
+import { WorkoutType } from "./WorkouType";
+import Joi from "joi";
 
 @Entity('exercise')
 export class Exercise {
@@ -22,6 +24,11 @@ export class Exercise {
 
     @ManyToOne(() => User, user => user.id)
     user: User | null;
+
+    @ManyToMany( () => WorkoutType, 
+                { cascade: true, onDelete: 'CASCADE' })
+    @JoinTable({name: 'exercise_workout_type'})
+    workoutTypes?: WorkoutType[];
 
     constructor() {
         this.id = uuid();

@@ -1,4 +1,6 @@
-export interface ExerciseDTO {
+import { WorkoutType } from "../entities/WorkouType";
+
+export interface ExerciseCreateRequestDTO {
     name: string;
     series: number;
     repetitions: number;
@@ -12,7 +14,7 @@ export interface ExerciseResponseDTO {
     series: number;
     repetitions: number;
     calories: number;
-    workoutType: WorkoutTypeDTO[];
+    workoutType?: WorkoutType[];
 }
 
 export interface WorkoutTypeDTO {
