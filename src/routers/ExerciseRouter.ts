@@ -9,7 +9,7 @@ const authValidator = new AuthenticationValidation();
 
 router.post(
     '/',
-    authValidator.validateToken,
+    //authValidator.validateToken,
     exerciseMiddlewares.validateCreateExercise,
     async (req, res, next) => {
         try {
