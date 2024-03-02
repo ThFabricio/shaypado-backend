@@ -5,10 +5,6 @@ export interface RegisterRequestDTO {
     email: string;
     password: string;
     userType: string;
-    weigth?: string;
-    height?: string;
-    workoutDays?: string;
-    any_disease?: string;
 };
 
 export interface RegisterResponseDTO {

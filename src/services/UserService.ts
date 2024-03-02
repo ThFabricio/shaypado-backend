@@ -18,10 +18,6 @@ export class UserService {
             newUser.email = userData.email ?? '';
             newUser.password = hash ?? '';
             newUser.userType = userData.userType ?? '';
-            newUser.weigth = userData.weigth ?? '';
-            newUser.height = userData.height ?? '';
-            newUser.workoutDays = userData.workoutDays ?? '';
-            newUser.any_disease = userData.any_disease ?? '';
             await this.userRepository.save(newUser);
             if (newUser) {
                 const secret = process.env.JWT_SECRET;

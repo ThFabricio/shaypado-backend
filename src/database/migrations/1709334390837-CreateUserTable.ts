@@ -34,23 +34,13 @@ export class CreateUserTable1707177932270 implements MigrationInterface {
                         isNullable: false
                     },
                     {
-                        name: "weigth",
-                        type: "varchar"
+                        name: "friendship_code",
+                        type: "varchar",
+                        isNullable: false
                     },
-                    {
-                        name: "height",
-                        type: "varchar"
-                    },
-                    {
-                        name: "workoutDays",
-                        type: "varchar"
-                    },
-                    {
-                        name: "any_disease",
-                        type: "varchar"
-                    }
                 ]
-            })
+            }),
+         true
         );
 
     }
