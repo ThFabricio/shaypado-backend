@@ -82,3 +82,43 @@ export const login = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Failed to login' });
     }
 };
+
+export const createFriendshipAssociation = async (req: Request, res: Response) => {
+    const userId = req.body.user_id;
+    const friendCode = req.body.friend_code;
+    try {
+        const result = await userService.createFriendshipAssociation(userId, friendCode);
+        if (result) {
+            res.json({ message: 'Friendship created successfully' });
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create friendship' });
+    }
+};
+
+export const listFriends = async (req: Request, res: Response) => {
+    const userId = req.params.id;
+    try {
+        const friends = await userService.listFriends(userId);
+        res.json(friends);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch friends' });
+    }
+};
+
+export const removeFriendship = async (req: Request, res: Response) => {
+    const userId = req.params.user_id;
+    const friendCode = req.body.friend_code;
+    try {
+        const result = await userService.removeFriendshipAssociation(userId, friendCode);
+        if (result) {
+            res.json({ message: 'Friendship removed successfully' });
+        } else {
+            res.status(404).json({ error: 'Friendship not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to remove friendship' });
+    }
+};

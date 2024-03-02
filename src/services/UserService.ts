@@ -4,9 +4,12 @@ import { LoginResponseDTO, RegisterRequestDTO, RegisterResponseDTO } from '../da
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import Utils from '../shared/Utils';
+import { Friendship } from '../database/entities/Friendship';
+import { listFriendsResponseDTO } from '../database/dto/FriendshipDTO';
 
 export class UserService {
     private userRepository = AppDataSource.getRepository(User);
+    private friendshipRepository = AppDataSource.getRepository(Friendship);
 
     async createUser(userData: RegisterRequestDTO): Promise<RegisterResponseDTO> {
         try{
@@ -87,6 +90,54 @@ export class UserService {
         }
         return { message: 'Invalid email or password' };
     }
+
+    async createFriendshipAssociation(userId: string, friendCode: string): Promise<boolean> {
+        const user = await this.userRepository.findOne({ where: { id: userId } });3
+        const friend = await this.userRepository.findOne({ where: { friendship_code: friendCode } });
+        if (user && friend) {
+            const friendship = new Friendship();
+            friendship.user = user;
+            friendship.friend = friend;
+            await this.friendshipRepository.save(friendship);
+            return true;
+        }
+        return false;
+    }
+
+    async listFriends(userId: string): Promise<listFriendsResponseDTO> {
+        const friendships = await this.friendshipRepository.find({ 
+            where: [{ user: { id: userId } }, { friend: { id: userId } }], 
+            relations: ["user", "friend"] 
+        });
+
+        const amigos = friendships.map(friendship => {
+            if (friendship.user?.id === userId) {
+                return { name: friendship.friend!.name!, init_day: friendship.init_day!, friend_code: friendship.friend!.friendship_code!}; 
+            } else {
+                return { name: friendship.friend!.name!, init_day: friendship.init_day!, friend_code: friendship.friend!.friendship_code! };
+            }
+        });
+
+        const amigosUnicos = Array.from(new Map(amigos.map(amigo => [amigo.friend_code, amigo])).values());
+
+        const user = await this.userRepository.findOne({ where: { id: userId } });
+        return { user_friendship_code: user!.friendship_code!, friends: amigosUnicos };
+    }
+
+    async removeFriendshipAssociation(userId: string, friendCode: string): Promise<boolean> {
+        const user = await this.userRepository.findOne({ where: { id: userId } });
+        const friend = await this.userRepository.findOne({ where: { friendship_code: friendCode } });
+        if (user && friend) {
+            const friendship = await this.friendshipRepository.findOne({ 
+                where: [{ user: { id: userId } }, { friend: { id: friend.id } }] 
+            });
+            if (friendship) {
+                await this.friendshipRepository.remove(friendship);
+                return true;
+            }
+        }
+        return false;
+    };
 }
 
 
