@@ -3,6 +3,7 @@ import { AppDataSource } from '../database/data-source';
 import { LoginResponseDTO, RegisterRequestDTO, RegisterResponseDTO } from '../database/dto/AuthenticationDTO';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import Utils from '../shared/Utils';
 
 export class UserService {
     private userRepository = AppDataSource.getRepository(User);
@@ -18,6 +19,7 @@ export class UserService {
             newUser.email = userData.email ?? '';
             newUser.password = hash ?? '';
             newUser.userType = userData.userType ?? '';
+            newUser.friendship_code = Utils.generateFriendshipCode(6);
             await this.userRepository.save(newUser);
             if (newUser) {
                 const secret = process.env.JWT_SECRET;
