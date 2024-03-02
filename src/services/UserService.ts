@@ -29,7 +29,8 @@ export class UserService {
                                         userType: newUser.userType
                                         }, secret!, {});
                 return {message: 'User created successfully',
-                        acessToken: token
+                        acessToken: token,
+                        userType: newUser.userType
                     };
             }
             return { message: 'Error creating user' };
