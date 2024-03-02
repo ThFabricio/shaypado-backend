@@ -10,6 +10,7 @@ export interface RegisterRequestDTO {
 export interface RegisterResponseDTO {
     message: string;
     acessToken?: string;
+    userType?: string;
 };
 
 export interface LoginRequestDTO {
@@ -20,6 +21,7 @@ export interface LoginRequestDTO {
 export interface LoginResponseDTO {
     message: string;
     acessToken?: string;
+    userType?: string;
 };
 
 export interface acessTokenDTO {
