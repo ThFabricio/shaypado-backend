@@ -30,7 +30,7 @@ export class Workout {
 
         @ManyToMany( () => Exercise )
         @JoinTable({name: 'workout_exercise'})
-        workoutTypes?: Exercise[];
+        exercises?: Exercise[];
 
         constructor() {
             this.id = uuid();
