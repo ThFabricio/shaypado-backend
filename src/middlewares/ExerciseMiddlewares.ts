@@ -14,7 +14,7 @@ export class ExerciseMiddlewares {
             repetitions: Joi.number().integer().min(1).required(),
             calories: Joi.number().min(0).required(),
             user_id: Joi.string().trim().required(),
-            workout_type_id: Joi.array().items(Joi.string().trim()).required(),
+            workoutType: Joi.array().items(Joi.string().trim()).required(),
         });
 
         const { error } = schema.validate(req.body);
