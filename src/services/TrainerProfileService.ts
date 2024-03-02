@@ -25,6 +25,7 @@ export class TrainerProfileService {
         newTrainerProfile.city = trainerProfileData.city ?? '';
         newTrainerProfile.work_location = trainerProfileData.work_location ?? '';
         newTrainerProfile.profilePicture = trainerProfileData.profilePicture ?? '';
+        newTrainerProfile.plansDocument = trainerProfileData.plansDocument ?? '';
         newTrainerProfile.user = user;
 
         return await this.trainerProfileRepository.save(newTrainerProfile);
