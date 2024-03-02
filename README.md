@@ -24,6 +24,6 @@
 
 ## Commands TypeORM
 
-- `npm run typeorm migration:create src/database/migrations/<migrate-name>` to generate a new migration
+- `npm run typeorm migration:create src/database/migrations/CreateStudentProfile` to generate a new migration
 - `npm run typeorm -- -d ./src/database/data-source.ts migration:run` to run the migrations
 - `npm run typeorm -- -d ./src/database/data-source.ts migration:revert` to revert the migrations

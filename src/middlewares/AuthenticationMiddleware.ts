@@ -11,11 +11,7 @@ export class AuthenticationValidation {
         name: Joi.string().required(),
         email: Joi.string().email().required(),
         password: Joi.string().pattern(this.passwordRegex).required(),
-        userType: Joi.string().valid('student', 'teacher').required(),
-        weigth: Joi.string().optional(),
-        height: Joi.string().optional(),
-        workoutDays: Joi.string().optional(),
-        any_disease: Joi.string().optional()
+        userType: Joi.string().valid('student', 'trainer').required(),
     });
 
     private loginSchema = Joi.object({
