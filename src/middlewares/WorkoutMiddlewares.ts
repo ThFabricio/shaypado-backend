@@ -15,6 +15,7 @@ export class WorkoutMiddlewares {
             day: Joi.string().trim().required(),
             workout_type_id: Joi.string().trim().required(),
             user_id: Joi.string().trim().required(),
+            exercises: Joi.array().items(Joi.string().trim()).optional(),
         });
 
         const { error } = schema.validate(req.body);

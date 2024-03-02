@@ -25,8 +25,7 @@ export class Exercise {
     @ManyToOne(() => User, user => user.id)
     user: User | null;
 
-    @ManyToMany( () => WorkoutType, 
-                { cascade: true, onDelete: 'CASCADE' })
+    @ManyToMany( () => WorkoutType )
     @JoinTable({name: 'exercise_workout_type'})
     workoutTypes?: WorkoutType[];
 

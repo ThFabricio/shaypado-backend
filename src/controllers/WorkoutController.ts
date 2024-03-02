@@ -6,8 +6,6 @@ import { WorkoutDTO } from '../database/dto/WorkoutDTO';
 const workoutService = new WorkoutService();
 
 export const createWorkout = async (req: WorkoutDTO, res: Response) => {
-    console.log('createWorkout');
-    console.log(req);
     try {
         const workout = await workoutService.createWorkout(req);
         res.status(201).json(workout);
