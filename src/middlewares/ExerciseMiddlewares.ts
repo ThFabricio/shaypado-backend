@@ -5,7 +5,7 @@ import Joi from 'joi';
 export class ExerciseMiddlewares {
     public validateCreateExercise: RequestHandler = async (req, res, next) => {
         let exercise = <ExerciseCreateRequestDTO> req.body;
-        req.body.userId = req.headers.userId;
+        req.body.user_id = req.headers.userId;
         req.body = exercise;
 
         const schema = Joi.object({
