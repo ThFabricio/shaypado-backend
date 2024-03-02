@@ -21,16 +21,7 @@ export class User {
     userType?: string;
 
     @Column()
-    weigth?: string;
-
-    @Column()
-    height?: string;
-
-    @Column()
-    workoutDays?: string;
-
-    @Column()
-    any_disease?: string;
+    friendship_code?: string;
 
     constructor() {
         this.id = uuid();
