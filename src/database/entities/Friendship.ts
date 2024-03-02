@@ -13,11 +13,11 @@ export class Friendship {
     init_day: Date;
 
     @ManyToOne(() => User)
-    @JoinTable({name: 'users'})
+    @JoinTable({name: 'user_id'})
     user: User | null;
 
     @ManyToOne(() => User)
-    @JoinTable({name: 'users'})
+    @JoinTable({name: 'user_id'})
     friend: User | null;
 
 
