@@ -4,7 +4,10 @@ import {createUser,
         getUserById, 
         updateUser, 
         deleteUser,
-        login} from '../controllers/UserController';
+        login,
+        createFriendshipAssociation,
+        listFriends,
+        removeFriendship} from '../controllers/UserController';
 import { AuthenticationValidation } from '../middlewares/AuthenticationMiddleware';
 
 const router = Router();
@@ -38,6 +41,32 @@ router.post(
         }
     }
 );
+
+router.post(
+    '/create-friendship',
+    async (req, res, next) => {
+        try {
+            await createFriendshipAssociation(req, res);
+        } catch (error) {
+            next(error);
+        }
+});
+
+router.get('/list-friends/:id', async (req, res, next) => {
+    try {
+        await listFriends(req, res);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.delete('/delete-friendship/:id', async (req, res, next) => {
+    try {
+        await removeFriendship(req, res);
+    } catch (error) {
+        next(error);
+    }
+});
 
 
 
