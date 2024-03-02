@@ -3,8 +3,8 @@ import { StatusCodes } from "http-status-codes";
 import UserRouter from "./UserRouter";
 import WorkoutRouter from "./WorkoutRouter";
 import ExerciseRouter from "./ExerciseRouter";
-import { TrainerProfileRouter } from "./TrainerProfileRouter";
-import { StudentProfileRouter } from "./StudentProfileRouter";
+import TrainerProfileRouter from "./TrainerProfileRouter";
+import StudentProfileRouter from "./StudentProfileRouter";
 
 const router = Router();
 
