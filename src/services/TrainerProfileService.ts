@@ -49,8 +49,27 @@ export class TrainerProfileService {
         return await this.trainerProfileRepository.find({ relations: ["user"] });
     }
 
-    async getTrainerProfileById(profileId: string): Promise<TrainerProfile | null> {
-        return await this.trainerProfileRepository.findOne({ where: { id: profileId }, relations: ["user"] });
+    async getTrainerProfileById(profileId: string): Promise<any | null> {
+        const trainerProfile = await this.trainerProfileRepository.findOne({ where: { id: profileId }, relations: ["user"] });
+        console.log("estou aqui")
+        console.log(trainerProfile?.user?.email);
+        let response: { [key: string]: string } = {};
+        response["email"] = trainerProfile?.user?.email ?? '';
+        response["name"] = trainerProfile?.user?.name ?? '';
+
+        response["id"] = trainerProfile?.id ?? '';
+        response["full_name"] = trainerProfile?.full_name ?? '';
+        response["contact_email"] = trainerProfile?.contact_email ?? '';
+        response["contact_phone"] = trainerProfile?.contact_phone ?? '';
+        response["specialties"] = trainerProfile?.specialties ?? '';
+        response["age"] = trainerProfile?.age?.toString() ?? '';
+        response["state"] = trainerProfile?.state ?? '';
+        response["city"] = trainerProfile?.city ?? '';
+        response["work_location"] = trainerProfile?.work_location ?? '';
+        response["profile_picure_id"] = trainerProfile?.profilePicture?.id ?? '';
+        response["plans_document_id"] = trainerProfile?.plansDocument?.id ?? '';
+
+        return response;
     }
 
     async updateTrainerProfile(profileId: string, trainerProfileData: Partial<TrainerProfile>): Promise<TrainerProfile | null> {
