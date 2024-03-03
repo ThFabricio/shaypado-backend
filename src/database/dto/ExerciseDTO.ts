@@ -1,19 +1,23 @@
 import { WorkoutType } from "../entities/WorkouType";
 
 export interface ExerciseCreateRequestDTO {
-    name: string;
+    title: string;
+    description: string;
+    video_url: string;
     series: number;
     repetitions: number;
-    calories: number;
+    time: string;
     user: string;
     workoutType: string[];
 }
 
 export interface ExerciseResponseDTO {
-    name: string;
+    title: string;
+    description: string;
+    video_url: string;
     series: number;
     repetitions: number;
-    calories: number;
+    time: string;
     workoutType?: WorkoutType[];
 }
 

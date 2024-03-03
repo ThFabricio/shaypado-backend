@@ -11,7 +11,13 @@ export class Exercise {
     id: string;
 
     @Column()
-    name: string;
+    title: string;
+
+    @Column()
+    description: string;
+
+    @Column()
+    video_url: string;
 
     @Column()
     series: number;
@@ -20,7 +26,7 @@ export class Exercise {
     repetitions: number;
 
     @Column()
-    calories: number;
+    time: string;
 
     @ManyToOne(() => User, user => user.id)
     user: User | null;
@@ -31,10 +37,12 @@ export class Exercise {
 
     constructor() {
         this.id = uuid();
-        this.name = '';
+        this.title = '';
+        this.description = '';
+        this.video_url = '';
         this.series = 0;
         this.repetitions = 0;
-        this.calories = 0;
+        this.time = '';
         this.user = null;
     }
 };

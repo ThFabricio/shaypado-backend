@@ -9,10 +9,12 @@ export class ExerciseMiddlewares {
         req.body = exercise;
 
         const schema = Joi.object({
-            name: Joi.string().trim().required(),
+            title: Joi.string().trim().required(),
+            description: Joi.string().trim().required(),
+            video_url: Joi.string().trim().required(),
             series: Joi.number().integer().min(1).required(),
             repetitions: Joi.number().integer().min(1).required(),
-            calories: Joi.number().min(0).required(),
+            time: Joi.string().trim().required(),
             user_id: Joi.string().trim().required(),
             workoutType: Joi.array().items(Joi.string().trim()).required(),
         });

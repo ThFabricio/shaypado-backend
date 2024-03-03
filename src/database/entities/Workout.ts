@@ -11,16 +11,7 @@ export class Workout {
         id: string;
     
         @Column()
-        name: string;
-    
-        @Column()
-        start_hour: string;
-    
-        @Column()
-        end_hour: string;
-    
-        @Column()
-        day: string;
+        title: string;
 
         @ManyToOne(() => WorkoutType, workoutType => workoutType.id)
         workoutType: WorkoutType | null;
@@ -34,10 +25,7 @@ export class Workout {
 
         constructor() {
             this.id = uuid();
-            this.name = '';
-            this.start_hour = '';
-            this.end_hour = '';
-            this.day = '';
+            this.title = '';
             this.workoutType = null;
             this.user = null;
         }

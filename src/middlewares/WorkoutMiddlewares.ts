@@ -9,10 +9,7 @@ export class WorkoutMiddlewares {
         req.body = workout;      
 
         const schema = Joi.object({
-            name: Joi.string().trim().required(),
-            start_hour: Joi.string().pattern(new RegExp('^[0-2]?[0-9]:[0-5][0-9]$')).required(),
-            end_hour: Joi.string().pattern(new RegExp('^[0-2]?[0-9]:[0-5][0-9]$')).required(),
-            day: Joi.string().trim().required(),
+            title: Joi.string().trim().required(),
             workout_type_id: Joi.string().trim().required(),
             user_id: Joi.string().trim().required(),
             exercises: Joi.array().items(Joi.string().trim()).optional(),

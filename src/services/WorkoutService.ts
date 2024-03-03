@@ -17,10 +17,7 @@ export class WorkoutService {
         const user = await this.userRepository.findOne({ where: { id: workoutData.user } });
 
         const newWorkout = new Workout();
-        newWorkout.name = workoutData.name ?? '';
-        newWorkout.start_hour = workoutData.start_hour ?? '';
-        newWorkout.end_hour = workoutData.end_hour ?? '';
-        newWorkout.day = workoutData.day ?? '';
+        newWorkout.title = workoutData.title ?? '';
         newWorkout.workoutType = workoutType;
         newWorkout.user = user;
 
