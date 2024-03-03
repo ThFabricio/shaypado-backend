@@ -1,3 +1,5 @@
+import { User } from "../entities/User";
+
 export interface TrainerProfileDTO {
     id: string;
     full_name: string;
@@ -10,5 +12,6 @@ export interface TrainerProfileDTO {
     work_location: string;
     profile_picure_id?: string;
     plans_document_id?: string;
+    user: User;
 }
 

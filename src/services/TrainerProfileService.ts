@@ -1,11 +1,10 @@
 import { TrainerProfile } from "../database/entities/TrainerProfile";
 import { AppDataSource } from '../database/data-source';
 import { TrainerProfileDTO } from "../database/dto/TrainerProfileDTO";
-import { User } from "../database/entities/User";
 import { ProfilePicture } from "../database/entities/ProfilePicure";
 import { PlansDocument } from "../database/entities/PlansDocument";
-import { UserService } from "./UserService";
-import { RegisterRequestDTO } from "../database/dto/AuthenticationDTO";
+import { Friendship } from "../database/entities/Friendship";
+import { User } from "../database/entities/User";
 
 
 
@@ -13,6 +12,8 @@ export class TrainerProfileService {
     private trainerProfileRepository = AppDataSource.getRepository(TrainerProfile);
     private profilePictureRepository = AppDataSource.getRepository(ProfilePicture);
     private plansDocumentRepository = AppDataSource.getRepository(PlansDocument);
+    private friendshipRepository = AppDataSource.getRepository(Friendship);
+    private userRepository = AppDataSource.getRepository(User);
 
     async createTrainerProfile(trainerProfileData: TrainerProfileDTO): Promise<TrainerProfile> {
 
@@ -25,6 +26,7 @@ export class TrainerProfileService {
         newTrainerProfile.state = trainerProfileData.state ?? '';
         newTrainerProfile.city = trainerProfileData.city ?? '';
         newTrainerProfile.work_location = trainerProfileData.work_location ?? '';
+        newTrainerProfile.user = trainerProfileData.user;
 
         if(trainerProfileData.profile_picure_id) {
             const profilePicture = await this.profilePictureRepository.findOne({ where: { id: trainerProfileData.profile_picure_id } });
@@ -110,5 +112,24 @@ export class TrainerProfileService {
             return await this.trainerProfileRepository.save(trainerProfile);
         }
         return null;
+    }
+
+    async associateStudentProfile(profileId: string, studentProfileId: string): Promise<boolean> {
+        //pegando o usuario de treinador atravez do id de profile trainer
+        const trainerProfile = await this.trainerProfileRepository.findOne({ where: { id: profileId } });
+        const userTrainer = await this.userRepository.findOne({ where: { id: trainerProfile?.user?.id } });
+        //pegando o usuario de aluno
+        const studentProfile = await this.userRepository.findOne({ where: { id: studentProfileId } });
+        const userStudent = await this.userRepository.findOne({ where: { id: studentProfile?.id } });
+        //verificando se ambos existem
+        if (userTrainer && userStudent) {
+            //criando a amizade
+            const friendship = new Friendship();
+            friendship.user = userTrainer;
+            friendship.friend = userStudent;
+            await this.friendshipRepository.save(friendship);
+            return true;
+        }
+        return false;
     }
 }
