@@ -84,7 +84,8 @@ export class UserService {
                                         }, secret!, {});
                 return {
                     message: 'User logged in successfully',
-                    acessToken: token
+                    acessToken: token,
+                    userType: user.userType
                 };
             }
         }
