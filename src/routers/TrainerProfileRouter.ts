@@ -20,7 +20,6 @@ router.post(
     //trainerProfileMiddelwares.validateCreateTrainerProfile,
     async (req, res, next) => {
         try {
-            console.log("Rota de criação de perfil de treinador");
             await createTrainerProfile(req, res);
         } catch (error) {
             next(error);
