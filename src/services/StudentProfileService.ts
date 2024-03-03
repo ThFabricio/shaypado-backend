@@ -31,8 +31,27 @@ export class StudentProfileService {
         return await this.studentProfileRepository.find({ relations: ["user"] });
     }
 
-    async getStudentProfileById(profileId: string): Promise<StudentProfile | null> {
-        return await this.studentProfileRepository.findOne({ where: { id: profileId }, relations: ["user"] });
+    async getStudentProfileById(profileId: string): Promise<any | null> {
+        const studentProfile = await this.studentProfileRepository.findOne({ where: { id: profileId }, relations: ["user"] });
+        let response: { [key: string]: string } = {};
+        response["email"] = studentProfile?.user?.email ?? '';
+        response["name"] = studentProfile?.user?.name ?? '';
+
+        response["id"] = studentProfile?.id ?? '';
+        response["gender"] = studentProfile?.gender ?? '';
+        response["fat_percentage"] = studentProfile?.fat_percentage ?? '';
+        response["arm_circumference"] = studentProfile?.arm_circumference ?? '';
+        response["waist_circumference"] = studentProfile?.waist_circumference ?? '';
+        response["abdomen_circumference"] = studentProfile?.abdomen_circumference ?? '';
+        response["hip_circumference"] = studentProfile?.hip_circumference ?? '';
+        response["thigh_circumference"] = studentProfile?.thigh_circumference ?? '';
+        response["leg_circumference"] = studentProfile?.leg_circumference ?? '';
+        response["height"] = studentProfile?.height ?? '';
+        response["weight"] = studentProfile?.weight ?? '';
+        response["age"] = studentProfile?.age.toString() ?? '';
+        response["shoulder_circumference"] = studentProfile?.shoulder_circumference ?? '';
+
+        return response;
     }
 
     async updateStudentProfile(profileId: string, studentProfileData: Partial<StudentProfile>): Promise<StudentProfile | null> {
