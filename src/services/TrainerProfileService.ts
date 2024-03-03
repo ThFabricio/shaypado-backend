@@ -1,6 +1,6 @@
 import { TrainerProfile } from "../database/entities/TrainerProfile";
 import { AppDataSource } from '../database/data-source';
-import { TrainerProfileDTO } from "../database/dto/TrainerProfileDTO";
+import { ListTrainerProfilesDTO, TrainerProfileDTO } from "../database/dto/TrainerProfileDTO";
 import { ProfilePicture } from "../database/entities/ProfilePicure";
 import { PlansDocument } from "../database/entities/PlansDocument";
 import { Friendship } from "../database/entities/Friendship";
@@ -50,26 +50,29 @@ export class TrainerProfileService {
     }
 
     async getTrainerProfileById(profileId: string): Promise<any | null> {
-        const trainerProfile = await this.trainerProfileRepository.findOne({ where: { id: profileId }, relations: ["user"] });
-        console.log("estou aqui")
-        console.log(trainerProfile?.user?.email);
-        let response: { [key: string]: string } = {};
-        response["email"] = trainerProfile?.user?.email ?? '';
-        response["name"] = trainerProfile?.user?.name ?? '';
-
-        response["id"] = trainerProfile?.id ?? '';
-        response["full_name"] = trainerProfile?.full_name ?? '';
-        response["contact_email"] = trainerProfile?.contact_email ?? '';
-        response["contact_phone"] = trainerProfile?.contact_phone ?? '';
-        response["specialties"] = trainerProfile?.specialties ?? '';
-        response["age"] = trainerProfile?.age?.toString() ?? '';
-        response["state"] = trainerProfile?.state ?? '';
-        response["city"] = trainerProfile?.city ?? '';
-        response["work_location"] = trainerProfile?.work_location ?? '';
-        response["profile_picure_id"] = trainerProfile?.profilePicture?.id ?? '';
-        response["plans_document_id"] = trainerProfile?.plansDocument?.id ?? '';
-
-        return response;
+        const trainerProfile = await this.trainerProfileRepository.findOne({ where: { id: profileId }, relations: ["user", "profilePicture", "plansDocument"] });
+        if (trainerProfile) {
+            const user = trainerProfile.user;
+            const profilePicture = trainerProfile.profilePicture ?? undefined;
+            const plansDocument = trainerProfile.plansDocument ?? undefined;
+            const listTrainerProfilesDTO: ListTrainerProfilesDTO = {
+                name: user?.name ?? '',
+                email: user?.email ?? '',
+                friendship_code: user?.friendship_code ?? '',
+                full_name: trainerProfile.full_name,
+                contact_email: trainerProfile.contact_email,
+                contact_phone: trainerProfile.contact_phone,
+                specialties: trainerProfile.specialties,
+                age: trainerProfile.age,
+                state: trainerProfile.state,
+                city: trainerProfile.city,
+                work_location: trainerProfile.work_location,
+                profile_picure: profilePicture,
+                plans_document: plansDocument
+            };
+            return listTrainerProfilesDTO;
+        }
+        return null;
     }
 
     async updateTrainerProfile(profileId: string, trainerProfileData: Partial<TrainerProfile>): Promise<TrainerProfile | null> {
