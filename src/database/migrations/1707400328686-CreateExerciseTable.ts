@@ -13,7 +13,17 @@ export class CreateExerciseTable1707400328686 implements MigrationInterface {
                         isPrimary: true,
                     },
                     {
-                        name: "name",
+                        name: "title",
+                        type: "varchar",
+                        isNullable: false
+                    },
+                    {
+                        name: "description",
+                        type: "varchar",
+                        isNullable: false
+                    },
+                    {
+                        name: "video_url",
                         type: "varchar",
                         isNullable: false
                     },
@@ -28,8 +38,8 @@ export class CreateExerciseTable1707400328686 implements MigrationInterface {
                         isNullable: false
                     },
                     {
-                        name: "calories",
-                        type: "integer",
+                        name: "time",
+                        type: "varchar",
                         isNullable: false
                     },
                     {

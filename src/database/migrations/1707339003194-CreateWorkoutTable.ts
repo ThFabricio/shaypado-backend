@@ -13,22 +13,7 @@ export class CreateWorkoutTable1707339003194 implements MigrationInterface {
                         isPrimary: true,
                     },
                     {
-                        name: "name",
-                        type: "varchar",
-                        isNullable: false
-                    },
-                    {
-                        name: "start_hour",
-                        type: "varchar",
-                        isNullable: false
-                    },
-                    {
-                        name: "end_hour",
-                        type: "varchar",
-                        isNullable: false
-                    },
-                    {
-                        name: "day",
+                        name: "title",
                         type: "varchar",
                         isNullable: false
                     },

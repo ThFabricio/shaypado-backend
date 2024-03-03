@@ -15,10 +15,12 @@ export class ExerciseService {
         const user = await this.userRepository.findOne({ where: { id: exerciseData.user } });
 
         const newExercise = new Exercise();
-        newExercise.name = exerciseData.name;
-        newExercise.series = exerciseData.series;
-        newExercise.repetitions = exerciseData.repetitions;
-        newExercise.calories = exerciseData.calories;
+        newExercise.title = exerciseData.title ?? '';
+        newExercise.description = exerciseData.description ?? '';
+        newExercise.video_url = exerciseData.video_url ?? '';
+        newExercise.series = exerciseData.series ?? 0;
+        newExercise.repetitions = exerciseData.repetitions ?? 0;
+        newExercise.time = exerciseData.time ?? '';
         newExercise.user = user;
 
         if(exerciseData.workoutType) {
@@ -28,10 +30,12 @@ export class ExerciseService {
 
         const exercise = await this.exerciseRepository.save(newExercise);
         return {
-            name: exercise.name,
+            title: exercise.title,
+            description: exercise.description,
+            video_url: exercise.video_url,
             series: exercise.series,
             repetitions: exercise.repetitions,
-            calories: exercise.calories,
+            time: exercise.time,
             workoutType: exercise.workoutTypes || []
         };
     }
@@ -66,10 +70,12 @@ export class ExerciseService {
         const exercises = await this.exerciseRepository.find({ where: { user: { id: userId } }, relations: ['workoutTypes'] });
         return exercises.map(exercise => {
             return {
-                name: exercise.name,
+                title: exercise.title,
+                description: exercise.description,
+                video_url: exercise.video_url,
                 series: exercise.series,
                 repetitions: exercise.repetitions,
-                calories: exercise.calories,
+                time: exercise.time,
                 workoutType: exercise.workoutTypes || []
             }
         });
