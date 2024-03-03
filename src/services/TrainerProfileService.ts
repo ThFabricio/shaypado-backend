@@ -2,11 +2,15 @@ import { TrainerProfile } from "../database/entities/TrainerProfile";
 import { AppDataSource } from '../database/data-source';
 import { TrainerProfileDTO } from "../database/dto/TrainerProfileDTO";
 import { User } from "../database/entities/User";
+import { ProfilePicture } from "../database/entities/ProfilePicure";
+import { PlansDocument } from "../database/entities/PlansDocument";
 
 
 export class TrainerProfileService {
     private trainerProfileRepository = AppDataSource.getRepository(TrainerProfile);
     private userRepository = AppDataSource.getRepository(User);
+    private profilePictureRepository = AppDataSource.getRepository(ProfilePicture);
+    private plansDocumentRepository = AppDataSource.getRepository(PlansDocument);
 
     async createTrainerProfile(trainerProfileData: TrainerProfileDTO): Promise<TrainerProfile> {
         const user = await this.userRepository.findOne({ where: { id: trainerProfileData.user } });
@@ -24,9 +28,21 @@ export class TrainerProfileService {
         newTrainerProfile.state = trainerProfileData.state ?? '';
         newTrainerProfile.city = trainerProfileData.city ?? '';
         newTrainerProfile.work_location = trainerProfileData.work_location ?? '';
-        newTrainerProfile.profilePicture = trainerProfileData.profilePicture ?? '';
-        newTrainerProfile.plansDocument = trainerProfileData.plansDocument ?? '';
         newTrainerProfile.user = user;
+
+        if(trainerProfileData.profile_picure_id) {
+            const profilePicture = await this.profilePictureRepository.findOne({ where: { id: trainerProfileData.profile_picure_id } });
+            if (profilePicture) {
+                newTrainerProfile.profilePicture = profilePicture;
+            }
+        }
+
+        if(trainerProfileData.plans_document_id) {
+            const plansDocument = await this.plansDocumentRepository.findOne({ where: { id: trainerProfileData.plans_document_id } });
+            if (plansDocument) {
+                newTrainerProfile.plansDocument = plansDocument;
+            }
+        }
 
         return await this.trainerProfileRepository.save(newTrainerProfile);
     }
@@ -55,5 +71,48 @@ export class TrainerProfileService {
             return true;
         }
         return false;
+    }
+
+    async uploadPicure(name: string, path: string): Promise<any> {
+        
+        const profilePicture = new ProfilePicture();
+        profilePicture.name = name;
+        profilePicture.path = path;
+
+        return await this.profilePictureRepository.save(profilePicture);      
+    }
+
+    async uploadDocument(name: string, path: string): Promise<any> {
+        
+        const profilePicture = new ProfilePicture();
+        profilePicture.name = name;
+        profilePicture.path = path;
+
+        return await this.plansDocumentRepository.save(profilePicture);      
+    }
+
+    async associateProfilePicture(profileId: string, pictureId: string): Promise<any> {
+        const trainerProfile = await this.trainerProfileRepository.findOne({ where: { id: profileId } });
+        console.log(trainerProfile);
+
+        const profilePicture = await this.profilePictureRepository.findOne({ where: { id: pictureId } });
+        console.log(profilePicture);
+
+        if (trainerProfile && profilePicture) {
+            trainerProfile.profilePicture = profilePicture;
+            return await this.trainerProfileRepository.save(trainerProfile);
+        }
+        return null;
+    };
+
+    async associatePlansDocument(profileId: string, documentId: string): Promise<any> {
+        const trainerProfile = await this.trainerProfileRepository.findOne({ where: { id: profileId } });
+        const plansDocument = await this.plansDocumentRepository.findOne({ where: { id: documentId } });
+
+        if (trainerProfile && plansDocument) {
+            trainerProfile.plansDocument = plansDocument;
+            return await this.trainerProfileRepository.save(trainerProfile);
+        }
+        return null;
     }
 }

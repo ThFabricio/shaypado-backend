@@ -8,7 +8,8 @@ export interface TrainerProfileDTO {
     state: string;
     city: string;
     work_location: string;
-    profilePicture: string;
-    plansDocument: string;
     user: string;
+    profile_picure_id?: string;
+    plans_document_id?: string;
 }
+
