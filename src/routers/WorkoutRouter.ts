@@ -29,8 +29,6 @@ router.post(
     '/multiple-create-workouts',
     async (req, res, next) => {
         try {
-            console.log(req.body);
-            console.log('entrou aqui');
             await createMultiplesWorkouts(req, res);
         } catch (error) {
             next(error);
