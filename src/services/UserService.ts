@@ -11,7 +11,7 @@ export class UserService {
     private userRepository = AppDataSource.getRepository(User);
     private friendshipRepository = AppDataSource.getRepository(Friendship);
 
-    async createUser(userData: RegisterRequestDTO): Promise<RegisterResponseDTO> {
+    async createUser(userData: RegisterRequestDTO): Promise<any> {
         try{
 
             const salt = await bcrypt.genSaltSync(10);
@@ -23,20 +23,7 @@ export class UserService {
             newUser.password = hash ?? '';
             newUser.userType = userData.userType ?? '';
             newUser.friendship_code = Utils.generateFriendshipCode(6);
-            await this.userRepository.save(newUser);
-            if (newUser) {
-                const secret = process.env.JWT_SECRET;
-
-                const token = jwt.sign({id: newUser.id,
-                                        email: newUser.email,
-                                        userType: newUser.userType
-                                        }, secret!, {});
-                return {message: 'User created successfully',
-                        acessToken: token,
-                        userType: newUser.userType
-                    };
-            }
-            return { message: 'Error creating user' };
+            return await this.userRepository.save(newUser);
         } catch (error: any) {
             return { message: error.message };
         }

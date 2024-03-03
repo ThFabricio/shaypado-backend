@@ -7,9 +7,12 @@ import {    createTrainerProfile,
             uploadPicure, 
             uploadDoc, 
             associateProfilePicture,
-            associatePlansDocument } from '../controllers/TrainerProfileController';
+            associatePlansDocument,
+            associateStudentProfile } from '../controllers/TrainerProfileController';
+import { createStudentProfile } from '../controllers/StudentProfileController';
 import { TrainerProfileMiddelwares } from '../middlewares/TrainerProfileMiddelwares';
 import { uploadImage, uploadDocument } from  '../shared/Multer';
+import { createFriendshipAssociation } from '../controllers/UserController';
 
 const router = Router();
 const trainerProfileMiddelwares = new TrainerProfileMiddelwares();
@@ -80,5 +83,20 @@ router.post(
         }
     }
 );
+
+/*router.post(
+    '/create-student-profile',
+    async (req, res, next) => {
+        try {
+            const student = await createStudentProfile(req, res);
+            req.body = student;
+            console.log("Rota de associação de perfil de estudante");
+            console.log(req.body);
+            await associateStudentProfile(req, res);
+        } catch (error) {
+            next(error);
+        }
+    }
+)*/
 
 export default router;

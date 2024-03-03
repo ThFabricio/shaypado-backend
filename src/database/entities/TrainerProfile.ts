@@ -41,6 +41,10 @@ export class TrainerProfile {
     @JoinColumn({ name: "plans_document_id" })
     plansDocument: PlansDocument | null;
 
+    @OneToOne(() => User) // Indica que há uma relação OneToOne com a entidade User
+    @JoinColumn({ name: "user_id" }) // Especifica a coluna que atua como chave estrangeira
+    user: User | null;
+
     constructor() {
         this.id = uuid();
         this.full_name = "";
@@ -53,5 +57,6 @@ export class TrainerProfile {
         this.work_location = "";
         this.profilePicture = null;
         this.plansDocument = null;
+        this.user = null;
     }
 }

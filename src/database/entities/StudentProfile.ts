@@ -40,6 +40,10 @@ export class StudentProfile {
     @Column({ default: '' })
     shoulder_circumference: string;
 
+    @OneToOne(() => User) // Indica que há uma relação OneToOne com a entidade User
+    @JoinColumn({ name: "user_id" }) // Especifica a coluna que atua como chave estrangeira
+    user: User | null;
+
     constructor() {
         this.id = uuid();
         this.fat_percentage = "";
@@ -53,5 +57,6 @@ export class StudentProfile {
         this.weight = "";
         this.age = 0; // Considerar um valor padrão ou ajustar conforme necessário
         this.shoulder_circumference = "";
+        this.user = null;
     }
 }

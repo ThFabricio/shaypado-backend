@@ -1,14 +1,15 @@
 import { Request, Response } from 'express';
 import { TrainerProfileService } from '../services/TrainerProfileService';
 import { TrainerProfileDTO } from '../database/dto/TrainerProfileDTO';
-import { TrainerProfile } from '../database/entities/TrainerProfile';
-import multer from 'multer';
 import { UserService } from '../services/UserService';
 import { RegisterRequestDTO } from '../database/dto/AuthenticationDTO';
+import { StudentProfileDTO } from '../database/dto/StudentProfileDTO';
+import { StudentProfileService } from '../services/StudentProfileService';
 
 const trainerProfileService = new TrainerProfileService();
 const userService = new UserService();
-const upload = multer({ dest: 'uploads/' });
+const studentProfileService = new StudentProfileService();
+
 
 
 export const createTrainerProfile = async (req: Request, res: Response) => {
@@ -172,5 +173,48 @@ export const associatePlansDocument = async (req: Request, res: Response) => {
         }
     } catch (error) {
         res.status(500).json({ error: 'Failed to associate document with trainer profile' });
+    }
+};
+
+export const createStudentProfile = async (req: Request, res: Response) => {
+    try {
+        const exist = await userService.getUserByEmail(req.body.email);
+        if (exist) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
+
+        const userData: RegisterRequestDTO = {
+            ...req.body,
+            userType: 'student' 
+        };
+
+        const user = await userService.createUser(userData);
+
+        const studentProfileData: StudentProfileDTO = {
+            ...req.body,
+            user: user 
+        };
+        const studentProfile = await studentProfileService.createStudentProfile(studentProfileData);
+        
+        res.status(201).json({ user, studentProfile });
+    } catch (error) {
+        console.error("Erro ao criar perfil de usuário: ", error);
+        res.status(500).json({ error: 'Failed to create student profile' });
+    }
+};
+
+export const associateStudentProfile = async (req: Request, res: Response) => {
+    console.log(req.body);
+    const studentId = req.body.student.id;
+    const trainerId = req.body.trainerId;
+    try {
+        const result = await trainerProfileService.associateStudentProfile(studentId, trainerId);
+        if (result) {
+            res.json(result);
+        } else {
+            res.status(404).json({ error: 'Student or trainer not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to associate student with trainer' });
     }
 };
