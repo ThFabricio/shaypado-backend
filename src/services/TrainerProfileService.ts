@@ -30,7 +30,19 @@ export class TrainerProfileService {
         newTrainerProfile.work_location = trainerProfileData.work_location ?? '';
         newTrainerProfile.user = user;
 
-        console.log(newTrainerProfile);
+        if(trainerProfileData.profile_picure_id) {
+            const profilePicture = await this.profilePictureRepository.findOne({ where: { id: trainerProfileData.profile_picure_id } });
+            if (profilePicture) {
+                newTrainerProfile.profilePicture = profilePicture;
+            }
+        }
+
+        if(trainerProfileData.plans_document_id) {
+            const plansDocument = await this.plansDocumentRepository.findOne({ where: { id: trainerProfileData.plans_document_id } });
+            if (plansDocument) {
+                newTrainerProfile.plansDocument = plansDocument;
+            }
+        }
 
         return await this.trainerProfileRepository.save(newTrainerProfile);
     }
@@ -87,8 +99,8 @@ export class TrainerProfileService {
         console.log(profilePicture);
 
         if (trainerProfile && profilePicture) {
-            profilePicture.trainer = trainerProfile;
-            return await this.profilePictureRepository.save(profilePicture);
+            trainerProfile.profilePicture = profilePicture;
+            return await this.trainerProfileRepository.save(trainerProfile);
         }
         return null;
     };
@@ -98,8 +110,8 @@ export class TrainerProfileService {
         const plansDocument = await this.plansDocumentRepository.findOne({ where: { id: documentId } });
 
         if (trainerProfile && plansDocument) {
-            plansDocument.trainer = trainerProfile;
-            return await this.plansDocumentRepository.save(plansDocument);
+            trainerProfile.plansDocument = plansDocument;
+            return await this.trainerProfileRepository.save(trainerProfile);
         }
         return null;
     }

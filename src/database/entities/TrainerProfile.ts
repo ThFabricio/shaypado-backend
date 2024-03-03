@@ -1,6 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne } from "typeorm";
 import { User } from "./User";
 import { v4 as uuid } from 'uuid';
+import { ProfilePicture } from "./ProfilePicure";
+import { PlansDocument } from "./PlansDocument";
 
 @Entity("trainer_profile")
 export class TrainerProfile {
@@ -36,6 +38,14 @@ export class TrainerProfile {
     @JoinColumn({ name: "user_id" }) // Especifica a coluna que atua como chave estrangeira
     user: User | null;
 
+    @ManyToOne(() => ProfilePicture, profilePicture => profilePicture.id)
+    @JoinColumn({ name: "profile_picture_id" })
+    profilePicture: ProfilePicture | null;
+
+    @ManyToOne(() => PlansDocument, plansDocument => plansDocument.id)
+    @JoinColumn({ name: "plans_document_id" })
+    plansDocument: PlansDocument | null;
+
     constructor() {
         this.id = uuid();
         this.full_name = "";
@@ -47,5 +57,7 @@ export class TrainerProfile {
         this.city = "";
         this.work_location = "";
         this.user = null;
+        this.profilePicture = null;
+        this.plansDocument = null;
     }
 }

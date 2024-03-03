@@ -16,13 +16,9 @@ export class PlansDocument {
         @Column()
         path: string;
     
-        @ManyToOne(() => TrainerProfile, trainerProfile => trainerProfile.id)
-        trainer: TrainerProfile | null;
-    
         constructor() {
             this.id = uuid();
             this.name = '';
             this.path = '';
-            this.trainer = null;
         }
 }

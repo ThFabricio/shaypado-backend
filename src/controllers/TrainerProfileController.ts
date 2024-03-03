@@ -11,21 +11,8 @@ const upload = multer({ dest: 'uploads/' });
 export const createTrainerProfile = async (req: Request, res: Response) => {
     try {
         const trainerProfileData: TrainerProfileDTO = req.body;
-
-        console.log("Controller de criação de perfil de treinador");
-        console.log(req.body);
-        console.log(trainerProfileData);
     
-        const trainerProfile = await trainerProfileService.createTrainerProfile(trainerProfileData);
-        if(trainerProfileData.profile_picure_id) {
-            const associate = await trainerProfileService.associateProfilePicture(trainerProfileData.profile_picure_id, trainerProfile.id);
-            console.log(associate);
-        }
-
-        if(trainerProfileData.plans_document_id) {
-            const associate = await trainerProfileService.associatePlansDocument(trainerProfileData.plans_document_id, trainerProfile.id);
-            console.log(associate);
-        }
+        const trainerProfile = await trainerProfileService.createTrainerProfile(trainerProfileData)
         res.status(201).json(trainerProfile);
     } catch (error) {
         res.status(500).json({ error: 'Failed to create trainer profile' });
