@@ -1,5 +1,6 @@
 export interface StudentProfileDTO {
     id: string;
+    gender: string;
     fat_percentage: string;
     arm_circumference: string;
     waist_circumference: string;

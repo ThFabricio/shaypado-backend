@@ -14,6 +14,11 @@ export class CreateStudentProfile1709329224496 implements MigrationInterface {
                         generationStrategy: 'uuid',
                     },
                     {
+                        name: "gender",
+                        type: "varchar",
+                        isNullable: true,
+                    },
+                    {
                         name: "fat_percentage",
                         type: "varchar",
                         isNullable: true,
