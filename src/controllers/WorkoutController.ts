@@ -65,3 +65,12 @@ export const deleteWorkout = async (req: Request, res: Response) => {
     }
 }
 
+export const createMultiplesWorkouts = async (req: Request, res: Response) => {
+    try {
+        const workouts = await workoutService.createMultiplesWorkouts(req.body);
+        res.status(201).json(workouts);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create workouts' });
+    }
+};
+

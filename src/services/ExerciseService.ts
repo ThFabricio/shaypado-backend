@@ -80,4 +80,37 @@ export class ExerciseService {
             }
         });
     }
+
+    async createMultipleExercises(exercisesData: ExerciseCreateRequestDTO[]): Promise<ExerciseResponseDTO[]> {
+        const exercises = await Promise.all(exercisesData.map(async exerciseData => {
+            const user = await this.userRepository.findOne({ where: { id: exerciseData.user } });
+
+            const newExercise = new Exercise();
+            newExercise.title = exerciseData.title ?? '';
+            newExercise.description = exerciseData.description ?? '';
+            newExercise.video_url = exerciseData.video_url ?? '';
+            newExercise.series = exerciseData.series ?? 0;
+            newExercise.repetitions = exerciseData.repetitions ?? 0;
+            newExercise.time = exerciseData.time ?? '';
+            newExercise.user = user;
+
+            if(exerciseData.workoutType) {
+                const workoutTypes = await this.workoutTypeRepository.findByIds(exerciseData.workoutType);
+                newExercise.workoutTypes = workoutTypes;
+            };
+
+            return await this.exerciseRepository.save(newExercise);
+        }));
+        return exercises.map(exercise => {
+            return {
+                title: exercise.title,
+                description: exercise.description,
+                video_url: exercise.video_url,
+                series: exercise.series,
+                repetitions: exercise.repetitions,
+                time: exercise.time,
+                workoutType: exercise.workoutTypes || []
+            }
+        });
+    }
 }

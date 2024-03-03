@@ -54,4 +54,25 @@ export class WorkoutService {
         }
         return false;
     }
+
+    async createMultiplesWorkouts(workoutsData: WorkoutDTO[]): Promise<Workout[]> {
+        const workouts: Workout[] = [];
+        for (const workoutData of workoutsData) {
+            const workoutType = await this.workoutTypeRepository.findOne({ where: { id: workoutData.workoutType } });
+            const user = await this.userRepository.findOne({ where: { id: workoutData.user } });
+
+            const newWorkout = new Workout();
+            newWorkout.title = workoutData.title ?? '';
+            newWorkout.workoutType = workoutType;
+            newWorkout.user = user;
+
+            if(workoutData.exercises) {
+                const exercises = await this.exerciseRepository.findByIds(workoutData.exercises);
+                newWorkout.exercises = exercises;
+            };
+
+            workouts.push(newWorkout);
+        }
+        return await this.workoutRepository.save(workouts);
+    }
 }

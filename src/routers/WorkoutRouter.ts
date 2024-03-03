@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { createWorkout, getAllWorkouts, getWorkoutById, updateWorkout, deleteWorkout} from '../controllers/WorkoutController';
+import {    createWorkout, 
+            getAllWorkouts, 
+            getWorkoutById, 
+            updateWorkout, 
+            deleteWorkout,
+            createMultiplesWorkouts   } from '../controllers/WorkoutController';
 import { WorkoutMiddlewares } from '../middlewares/WorkoutMiddlewares';
 
 const router = Router();
@@ -19,5 +24,18 @@ router.get('/', getAllWorkouts);
 router.get('/:id', getWorkoutById);
 router.put('/:id', updateWorkout);
 router.delete('/:id', deleteWorkout);
+
+router.post(
+    '/multiple-create-workouts',
+    async (req, res, next) => {
+        try {
+            console.log(req.body);
+            console.log('entrou aqui');
+            await createMultiplesWorkouts(req, res);
+        } catch (error) {
+            next(error);
+        }
+    }
+)
 
 export default router;
