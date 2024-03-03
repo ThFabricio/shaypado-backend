@@ -5,14 +5,9 @@ import { User } from "../database/entities/User";
 
 export class StudentProfileService {
     private studentProfileRepository = AppDataSource.getRepository(StudentProfile);
-    private userRepository = AppDataSource.getRepository(User);
 
+    
     async createStudentProfile(studentProfileData: StudentProfileDTO): Promise<StudentProfile> {
-        const user = await this.userRepository.findOne({ where: { id: studentProfileData.user } });
-
-        if (!user) {
-            throw new Error("User not found");
-        }
 
         const newStudentProfile = new StudentProfile();
         newStudentProfile.fat_percentage = studentProfileData.fat_percentage ?? '';
@@ -26,7 +21,6 @@ export class StudentProfileService {
         newStudentProfile.weight = studentProfileData.weight ?? '';
         newStudentProfile.age = studentProfileData.age; // Considerando que a idade é um número, não aplicamos o operador de coalescência nula aqui.
         newStudentProfile.shoulder_circumference = studentProfileData.shoulder_circumference ?? '';
-        newStudentProfile.user = user; 
 
         return await this.studentProfileRepository.save(newStudentProfile);
     }

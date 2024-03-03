@@ -7,10 +7,11 @@ const studentProfileMiddlewares = new StudentProfileMiddlewares();
 
 router.post(
     '/',
-    studentProfileMiddlewares.validateCreateStudentProfile,
+    //studentProfileMiddlewares.validateCreateStudentProfile,
     async (req, res, next) => {
         try {
-            await createStudentProfile(req.body, res);
+
+            await createStudentProfile(req, res);
         } catch (error) {
             next(error);
         }

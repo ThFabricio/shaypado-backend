@@ -4,20 +4,17 @@ import { TrainerProfileDTO } from "../database/dto/TrainerProfileDTO";
 import { User } from "../database/entities/User";
 import { ProfilePicture } from "../database/entities/ProfilePicure";
 import { PlansDocument } from "../database/entities/PlansDocument";
+import { UserService } from "./UserService";
+import { RegisterRequestDTO } from "../database/dto/AuthenticationDTO";
+
 
 
 export class TrainerProfileService {
     private trainerProfileRepository = AppDataSource.getRepository(TrainerProfile);
-    private userRepository = AppDataSource.getRepository(User);
     private profilePictureRepository = AppDataSource.getRepository(ProfilePicture);
     private plansDocumentRepository = AppDataSource.getRepository(PlansDocument);
 
     async createTrainerProfile(trainerProfileData: TrainerProfileDTO): Promise<TrainerProfile> {
-        const user = await this.userRepository.findOne({ where: { id: trainerProfileData.user } });
-
-        if (!user) {
-            throw new Error("User not found");
-        }
 
         const newTrainerProfile = new TrainerProfile();
         newTrainerProfile.full_name = trainerProfileData.full_name ?? '';
@@ -28,7 +25,6 @@ export class TrainerProfileService {
         newTrainerProfile.state = trainerProfileData.state ?? '';
         newTrainerProfile.city = trainerProfileData.city ?? '';
         newTrainerProfile.work_location = trainerProfileData.work_location ?? '';
-        newTrainerProfile.user = user;
 
         if(trainerProfileData.profile_picure_id) {
             const profilePicture = await this.profilePictureRepository.findOne({ where: { id: trainerProfileData.profile_picure_id } });

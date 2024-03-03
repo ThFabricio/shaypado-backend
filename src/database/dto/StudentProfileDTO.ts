@@ -11,5 +11,4 @@ export interface StudentProfileDTO {
     weight: string;
     age: number;
     shoulder_circumference: string;
-    user: string;
 }

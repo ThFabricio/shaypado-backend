@@ -64,19 +64,6 @@ export class CreateTrainerProfile1709329185806 implements MigrationInterface {
                     type: "varchar",
                     isNullable: true
                 },
-                {
-                    name: "user_id",
-                    type: "uuid",
-                    isNullable: false
-                },
-            ],
-            foreignKeys: [
-                {
-                    name: "FKUser",
-                    referencedTableName: "users",
-                    referencedColumnNames: ["id"],
-                    columnNames: ["user_id"],
-                }
             ],
         })
     );

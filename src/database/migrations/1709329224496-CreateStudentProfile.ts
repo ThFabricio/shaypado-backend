@@ -138,19 +138,6 @@ export class CreateStudentProfile1709329224496 implements MigrationInterface {
                         type: "boolean",
                         isNullable: false, // campo obrigatório
                     },
-                    {
-                        name: "user_id",
-                        type: "uuid",
-                        isNullable: false
-                    },
-                ],
-                foreignKeys: [
-                    {
-                        name: "FKUser",
-                        referencedTableName: "users",
-                        referencedColumnNames: ["id"],
-                        columnNames: ["user_id"],
-                    }
                 ],
             }),
             true // Passa 'true' para criar a tabela sem erros se ela já existir

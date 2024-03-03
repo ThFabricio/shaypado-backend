@@ -33,11 +33,6 @@ export class TrainerProfile {
     @Column()
     work_location: string;
 
-    // Relação OneToOne com a entidade User
-    @OneToOne(() => User) // Indica que há uma relação OneToOne com a entidade User
-    @JoinColumn({ name: "user_id" }) // Especifica a coluna que atua como chave estrangeira
-    user: User | null;
-
     @ManyToOne(() => ProfilePicture, profilePicture => profilePicture.id)
     @JoinColumn({ name: "profile_picture_id" })
     profilePicture: ProfilePicture | null;
@@ -56,7 +51,6 @@ export class TrainerProfile {
         this.state = "";
         this.city = "";
         this.work_location = "";
-        this.user = null;
         this.profilePicture = null;
         this.plansDocument = null;
     }
