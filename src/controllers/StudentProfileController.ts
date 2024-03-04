@@ -29,7 +29,7 @@ export const createStudentProfile = async (req: Request, res: Response) => {
         };
 
         const studentProfile = await studentProfileService.createStudentProfile(studentProfileData);
-        res.status(201).json({ user, studentProfile });
+        res.status(201).json({ studentProfile });
     } catch (error) {
         console.error("Erro ao criar perfil de usuário: ", error);
         res.status(500).json({ error: 'Failed to create student profile' });

@@ -21,6 +21,7 @@ export class StudentProfileService {
         newStudentProfile.weight = studentProfileData.weight ?? '';
         newStudentProfile.age = studentProfileData.age; // Considerando que a idade é um número, não aplicamos o operador de coalescência nula aqui.
         newStudentProfile.shoulder_circumference = studentProfileData.shoulder_circumference ?? '';
+        newStudentProfile.user = studentProfileData.user;
 
         return await this.studentProfileRepository.save(newStudentProfile);
     }

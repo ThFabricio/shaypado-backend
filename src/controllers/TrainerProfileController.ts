@@ -195,18 +195,25 @@ export const createStudentProfile = async (req: Request, res: Response) => {
             user: user 
         };
         const studentProfile = await studentProfileService.createStudentProfile(studentProfileData);
+
+        const associateStudentProfile = await trainerProfileService.associateStudentProfile(req.body.trainerId, studentProfile.id);
         
-        res.status(201).json({ user, studentProfile });
+        res.status(201).json({ studentProfile });
     } catch (error) {
         console.error("Erro ao criar perfil de usuário: ", error);
         res.status(500).json({ error: 'Failed to create student profile' });
     }
 };
 
+
+
 export const associateStudentProfile = async (req: Request, res: Response) => {
-    console.log(req.body);
+    console.log("Rota de associação de perfil de estudante");
+    console.log(req.body); 
     const studentId = req.body.student.id;
-    const trainerId = req.body.trainerId;
+    const trainerId = req.body.trainerId; 
+    console.log(studentId);
+    console.log(trainerId);
     try {
         const result = await trainerProfileService.associateStudentProfile(studentId, trainerId);
         if (result) {

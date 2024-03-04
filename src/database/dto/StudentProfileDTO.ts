@@ -1,3 +1,5 @@
+import { User } from "../entities/User";
+
 export interface StudentProfileDTO {
     id: string;
     fat_percentage: string;
@@ -11,4 +13,5 @@ export interface StudentProfileDTO {
     weight: string;
     age: number;
     shoulder_circumference: string;
+    user: User;
 }

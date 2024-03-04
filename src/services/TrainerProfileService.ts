@@ -5,6 +5,7 @@ import { ProfilePicture } from "../database/entities/ProfilePicure";
 import { PlansDocument } from "../database/entities/PlansDocument";
 import { Friendship } from "../database/entities/Friendship";
 import { User } from "../database/entities/User";
+import { StudentProfile } from "../database/entities/StudentProfile";
 
 
 
@@ -14,6 +15,7 @@ export class TrainerProfileService {
     private plansDocumentRepository = AppDataSource.getRepository(PlansDocument);
     private friendshipRepository = AppDataSource.getRepository(Friendship);
     private userRepository = AppDataSource.getRepository(User);
+    private studentProfileRepository = AppDataSource.getRepository(StudentProfile);
 
     async createTrainerProfile(trainerProfileData: TrainerProfileDTO): Promise<TrainerProfile> {
 
@@ -115,18 +117,13 @@ export class TrainerProfileService {
     }
 
     async associateStudentProfile(profileId: string, studentProfileId: string): Promise<boolean> {
-        //pegando o usuario de treinador atravez do id de profile trainer
-        const trainerProfile = await this.trainerProfileRepository.findOne({ where: { id: profileId } });
-        const userTrainer = await this.userRepository.findOne({ where: { id: trainerProfile?.user?.id } });
-        //pegando o usuario de aluno
-        const studentProfile = await this.userRepository.findOne({ where: { id: studentProfileId } });
-        const userStudent = await this.userRepository.findOne({ where: { id: studentProfile?.id } });
-        //verificando se ambos existem
-        if (userTrainer && userStudent) {
-            //criando a amizade
+        const trainerProfile = await this.trainerProfileRepository.findOne({ where: { id: profileId }, relations: ["user"] });
+        const studentProfile = await this.studentProfileRepository.findOne({ where: { id: studentProfileId }, relations: ["user"] });
+
+        if (trainerProfile && studentProfile) {
             const friendship = new Friendship();
-            friendship.user = userTrainer;
-            friendship.friend = userStudent;
+            friendship.user = trainerProfile.user;
+            friendship.friend = studentProfile.user;
             await this.friendshipRepository.save(friendship);
             return true;
         }
