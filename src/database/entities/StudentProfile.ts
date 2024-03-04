@@ -8,6 +8,9 @@ export class StudentProfile {
     id: string;
 
     @Column({ default: '' })
+    gender: string;
+
+    @Column({ default: '' })
     fat_percentage: string;
 
     @Column({ default: '' })
@@ -46,6 +49,7 @@ export class StudentProfile {
 
     constructor() {
         this.id = uuid();
+        this.gender = "";
         this.fat_percentage = "";
         this.arm_circumference = "";
         this.waist_circumference = "";

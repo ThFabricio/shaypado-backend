@@ -10,6 +10,7 @@ export class StudentProfileService {
     async createStudentProfile(studentProfileData: StudentProfileDTO): Promise<StudentProfile> {
 
         const newStudentProfile = new StudentProfile();
+        newStudentProfile.gender = studentProfileData.gender ?? '';
         newStudentProfile.fat_percentage = studentProfileData.fat_percentage ?? '';
         newStudentProfile.arm_circumference = studentProfileData.arm_circumference ?? '';
         newStudentProfile.waist_circumference = studentProfileData.waist_circumference ?? '';
