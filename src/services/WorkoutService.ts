@@ -77,4 +77,13 @@ export class WorkoutService {
         }
         return await this.workoutRepository.save(workouts);
     }
+
+    async getTrainingPrePreparede(): Promise<Workout[]> {
+        console.log('entrou');
+        const workouts = await this.workoutRepository.find({relations: ['users'] });
+        const trainer_admin = workouts.filter(workout => workout.user?.userType === 'admin');
+
+        return trainer_admin;
+        
+    }
 }
