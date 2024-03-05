@@ -20,7 +20,7 @@ router.delete('/:id', deleteUser);
 
 router.post(
     '/register',
-    authValidator.validateRegister,
+   // authValidator.validateRegister,
     async (req, res, next) => {
         try {
             await createUser(req.body, res);      

@@ -4,7 +4,8 @@ import {    createWorkout,
             getWorkoutById, 
             updateWorkout, 
             deleteWorkout,
-            createMultiplesWorkouts   } from '../controllers/WorkoutController';
+            createMultiplesWorkouts,
+            getTrainingPrePreparede  } from '../controllers/WorkoutController';
 import { WorkoutMiddlewares } from '../middlewares/WorkoutMiddlewares';
 
 const router = Router();
@@ -22,7 +23,7 @@ router.post(
         }
     });
 router.get('/', getAllWorkouts);
-router.get('/:id', getWorkoutById);
+//router.get('/:id', getWorkoutById);
 router.put('/:id', updateWorkout);
 router.delete('/:id', deleteWorkout);
 
@@ -31,6 +32,18 @@ router.post(
     async (req, res, next) => {
         try {
             await createMultiplesWorkouts(req, res);
+        } catch (error) {
+            next(error);
+        }
+    }
+)
+
+router.get(
+    '/list-workouts-admin',
+    async (req, res, next) => {
+        try {
+            await getTrainingPrePreparede(req, res);
+            
         } catch (error) {
             next(error);
         }
