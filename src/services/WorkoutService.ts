@@ -78,6 +78,10 @@ export class WorkoutService {
         return await this.workoutRepository.save(workouts);
     }
 
+    async listAllWorkoutTypes(): Promise<WorkoutType[]> {
+        return await this.workoutTypeRepository.find();
+    }
+
     async getTrainingPrePreparede(): Promise<Workout[]> {
         const workouts = await this.workoutRepository.find({ relations: ['user'] });
 

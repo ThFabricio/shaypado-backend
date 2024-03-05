@@ -5,6 +5,7 @@ import {    createWorkout,
             updateWorkout, 
             deleteWorkout,
             createMultiplesWorkouts,
+            listAllWorkoutTypes,
             getTrainingPrePreparede  } from '../controllers/WorkoutController';
 import { WorkoutMiddlewares } from '../middlewares/WorkoutMiddlewares';
 
@@ -32,6 +33,16 @@ router.post(
     async (req, res, next) => {
         try {
             await createMultiplesWorkouts(req, res);
+        } catch (error) {
+            next(error);
+        }
+    }
+)
+
+router.get('/workout-types', 
+    async (req, res, next) => {
+        try {
+            await listAllWorkoutTypes(req, res);
         } catch (error) {
             next(error);
         }
