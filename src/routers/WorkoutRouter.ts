@@ -23,7 +23,7 @@ router.post(
         }
     });
 router.get('/', getAllWorkouts);
-router.get('/:id', getWorkoutById);
+//router.get('/:id', getWorkoutById);
 router.put('/:id', updateWorkout);
 router.delete('/:id', deleteWorkout);
 

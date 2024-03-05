@@ -14,7 +14,7 @@ export class WorkoutService {
 
     async createWorkout(workoutData: WorkoutDTO): Promise<Workout> {
         const workoutType = await this.workoutTypeRepository.findOne({ where: { id: workoutData.workoutType } });
-        const user = await this.userRepository.findOne({ where: { id: workoutData.user } });
+        const user = await this.userRepository.findOne({ where: { id: workoutData.user_id } });
 
         const newWorkout = new Workout();
         newWorkout.title = workoutData.title ?? '';
@@ -60,7 +60,7 @@ export class WorkoutService {
         const workouts: Workout[] = [];
         for (const workoutData of workoutsData) {
             const workoutType = await this.workoutTypeRepository.findOne({ where: { id: workoutData.workoutType } });
-            const user = await this.userRepository.findOne({ where: { id: workoutData.user } });
+            const user = await this.userRepository.findOne({ where: { id: workoutData.user_id } });
 
             const newWorkout = new Workout();
             newWorkout.title = workoutData.title ?? '';
@@ -79,9 +79,10 @@ export class WorkoutService {
     }
 
     async getTrainingPrePreparede(): Promise<Workout[]> {
-        console.log('entrou');
-        const workouts = await this.workoutRepository.find({relations: ['users'] });
+        const workouts = await this.workoutRepository.find({ relations: ['user'] });
+
         const trainer_admin = workouts.filter(workout => workout.user?.userType === 'admin');
+
 
         return trainer_admin;
         

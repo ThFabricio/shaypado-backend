@@ -18,7 +18,6 @@ export const createWorkout = async (req: WorkoutDTO, res: Response) => {
 
 export const getAllWorkouts = async (req: Request, res: Response) => {
     try {
-        console.log("cheguei aqui");
         const workouts = await workoutService.getAllWorkouts();
         res.json(workouts);
 
