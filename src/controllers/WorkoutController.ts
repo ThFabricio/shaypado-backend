@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { WorkoutService } from '../services/WorkoutService';
 import { Workout } from '../database/entities/Workout';
 import { WorkoutDTO } from '../database/dto/WorkoutDTO';
+import { User } from '../database/entities/User';
+import { get } from 'http';
 
 const workoutService = new WorkoutService();
 
@@ -18,6 +20,7 @@ export const getAllWorkouts = async (req: Request, res: Response) => {
     try {
         const workouts = await workoutService.getAllWorkouts();
         res.json(workouts);
+
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch workouts' });
     }
@@ -82,4 +85,14 @@ export const listAllWorkoutTypes = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Failed to fetch workout types' });
     }
 };
+
+export const getTrainingPrePreparede = async (req: Request, res: Response) => {
+    console.log('entrou');
+    try {
+        const workouts = await workoutService.getTrainingPrePreparede();
+        res.json(workouts);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch workouts' });
+    }
+}
 

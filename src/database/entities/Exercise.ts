@@ -28,6 +28,9 @@ export class Exercise {
     @Column()
     time: string;
 
+    @Column()
+    end_exercise: boolean;
+
     @ManyToOne(() => User, user => user.id)
     user: User | null;
 
@@ -43,6 +46,7 @@ export class Exercise {
         this.series = 0;
         this.repetitions = 0;
         this.time = '';
+        this.end_exercise = false;
         this.user = null;
     }
 };

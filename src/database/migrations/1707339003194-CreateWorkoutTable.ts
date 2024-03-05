@@ -27,6 +27,11 @@ export class CreateWorkoutTable1707339003194 implements MigrationInterface {
                         type: "uuid",  
                         isNullable: false
                     },
+                    {
+                        name: "end_workout",
+                        type: "boolean",
+                        isNullable: false
+                    },
                 ],
                 foreignKeys: [
                     {

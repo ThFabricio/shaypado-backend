@@ -15,6 +15,7 @@ export class ExerciseMiddlewares {
             series: Joi.number().integer().min(1).required(),
             repetitions: Joi.number().integer().min(1).required(),
             time: Joi.string().trim().required(),
+            end_exercise: Joi.boolean().required(),
             user_id: Joi.string().trim().required(),
             workoutType: Joi.array().items(Joi.string().trim()).required(),
         });
@@ -27,6 +28,12 @@ export class ExerciseMiddlewares {
         next();
     }
 
+    //flag admin
+    //user e no user type eu vou passar admin 
+    //o admin já consegue cadastrar um treino
+    // se o treino fro cadastrado por um admin 
+    //esse treino é pré pronto 
+    //listar esse treino pré pronto 
     public validateUpdateExercise: RequestHandler = async (req, res, next) => {
         const schema = Joi.object({
             name: Joi.string().trim().optional(),

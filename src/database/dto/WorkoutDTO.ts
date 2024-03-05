@@ -1,8 +1,9 @@
 export interface WorkoutDTO {
     id: string;
     title: string;
+    endWorkout: boolean;
     workoutType: string;
-    user: string;
+    user_id: string;
     exercises: string[];
 }
 

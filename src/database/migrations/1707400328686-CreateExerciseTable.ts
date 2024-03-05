@@ -43,6 +43,11 @@ export class CreateExerciseTable1707400328686 implements MigrationInterface {
                         isNullable: false
                     },
                     {
+                        name: "end_exercise",
+                        type: "boolean",
+                        isNullable: false
+                    },
+                    {
                         name: "user_id",
                         type: "uuid",
                         isNullable: false

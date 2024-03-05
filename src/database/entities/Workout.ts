@@ -13,6 +13,9 @@ export class Workout {
         @Column()
         title: string;
 
+        @Column()
+        endWorkout: boolean;
+
         @ManyToOne(() => WorkoutType, workoutType => workoutType.id)
         workoutType: WorkoutType | null;
 
@@ -26,6 +29,7 @@ export class Workout {
         constructor() {
             this.id = uuid();
             this.title = '';
+            this.endWorkout = false;
             this.workoutType = null;
             this.user = null;
         }
