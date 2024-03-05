@@ -75,4 +75,8 @@ export class WorkoutService {
         }
         return await this.workoutRepository.save(workouts);
     }
+
+    async listAllWorkoutTypes(): Promise<WorkoutType[]> {
+        return await this.workoutTypeRepository.find();
+    }
 }

@@ -74,3 +74,12 @@ export const createMultiplesWorkouts = async (req: Request, res: Response) => {
     }
 };
 
+export const listAllWorkoutTypes = async (req: Request, res: Response) => {
+    try {
+        const workoutTypes = await workoutService.listAllWorkoutTypes();
+        res.json(workoutTypes);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch workout types' });
+    }
+};
+
