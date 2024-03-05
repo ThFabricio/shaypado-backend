@@ -7,6 +7,7 @@ export interface ExerciseCreateRequestDTO {
     series: number;
     repetitions: number;
     time: string;
+    end_exercise: boolean;
     user: string;
     workoutType: string[];
 }
@@ -18,6 +19,7 @@ export interface ExerciseResponseDTO {
     series: number;
     repetitions: number;
     time: string;
+    end_exercise: boolean;
     workoutType?: WorkoutType[];
 }
 

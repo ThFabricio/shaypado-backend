@@ -15,6 +15,7 @@ router.post(
     workoutMiddlewares.validateCreateWorkout,
     async (req, res, next) => {
         try {
+            console.log(req.body);
             await createWorkout(req.body, res);
         } catch (error) {
             next(error);

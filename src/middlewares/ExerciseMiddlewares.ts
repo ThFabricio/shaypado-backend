@@ -15,6 +15,7 @@ export class ExerciseMiddlewares {
             series: Joi.number().integer().min(1).required(),
             repetitions: Joi.number().integer().min(1).required(),
             time: Joi.string().trim().required(),
+            end_exercise: Joi.boolean().required(),
             user_id: Joi.string().trim().required(),
             workoutType: Joi.array().items(Joi.string().trim()).required(),
         });

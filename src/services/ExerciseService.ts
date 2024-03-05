@@ -21,6 +21,7 @@ export class ExerciseService {
         newExercise.series = exerciseData.series ?? 0;
         newExercise.repetitions = exerciseData.repetitions ?? 0;
         newExercise.time = exerciseData.time ?? '';
+        newExercise.end_exercise = exerciseData.end_exercise ?? false;
         newExercise.user = user;
 
         if(exerciseData.workoutType) {
@@ -36,6 +37,7 @@ export class ExerciseService {
             series: exercise.series,
             repetitions: exercise.repetitions,
             time: exercise.time,
+            end_exercise: exercise.end_exercise,
             workoutType: exercise.workoutTypes || []
         };
     }
@@ -76,6 +78,7 @@ export class ExerciseService {
                 series: exercise.series,
                 repetitions: exercise.repetitions,
                 time: exercise.time,
+                end_exercise: exercise.end_exercise,
                 workoutType: exercise.workoutTypes || []
             }
         });
@@ -92,6 +95,7 @@ export class ExerciseService {
             newExercise.series = exerciseData.series ?? 0;
             newExercise.repetitions = exerciseData.repetitions ?? 0;
             newExercise.time = exerciseData.time ?? '';
+            newExercise.end_exercise = exerciseData.end_exercise ?? false;
             newExercise.user = user;
 
             if(exerciseData.workoutType) {
@@ -109,6 +113,7 @@ export class ExerciseService {
                 series: exercise.series,
                 repetitions: exercise.repetitions,
                 time: exercise.time,
+                end_exercise: exercise.end_exercise,
                 workoutType: exercise.workoutTypes || []
             }
         });

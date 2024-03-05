@@ -18,6 +18,7 @@ export class WorkoutService {
 
         const newWorkout = new Workout();
         newWorkout.title = workoutData.title ?? '';
+        newWorkout.endWorkout = workoutData.endWorkout ?? false;
         newWorkout.workoutType = workoutType;
         newWorkout.user = user;
 
@@ -63,6 +64,7 @@ export class WorkoutService {
 
             const newWorkout = new Workout();
             newWorkout.title = workoutData.title ?? '';
+            newWorkout.endWorkout = workoutData.endWorkout ?? false;
             newWorkout.workoutType = workoutType;
             newWorkout.user = user;
 

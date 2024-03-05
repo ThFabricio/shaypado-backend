@@ -5,11 +5,14 @@ import Joi from 'joi';
 export class WorkoutMiddlewares {
 
     public validateCreateWorkout: RequestHandler = async (req, res, next) => {
+        console.log(req.body);
         let workout = <WorkoutDTO> req.body;
+        console.log(workout);
         req.body = workout;      
 
         const schema = Joi.object({
             title: Joi.string().trim().required(),
+            endWorkout: Joi.boolean().optional(),
             workout_type_id: Joi.string().trim().required(),
             user_id: Joi.string().trim().required(),
             exercises: Joi.array().items(Joi.string().trim()).optional(),
