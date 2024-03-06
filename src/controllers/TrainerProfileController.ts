@@ -32,7 +32,7 @@ export const createTrainerProfile = async (req: Request, res: Response) => {
         };
         const trainerProfile = await trainerProfileService.createTrainerProfile(trainerProfileData);
         
-        res.status(201).json({ user, trainerProfile });
+        res.status(201).json(trainerProfile);
     } catch (error) {
         console.error("Erro ao criar perfil de treinador: ", error);
         res.status(500).json({ error: 'Failed to create trainer profile' });
