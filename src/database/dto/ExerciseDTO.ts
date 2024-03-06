@@ -13,6 +13,7 @@ export interface ExerciseCreateRequestDTO {
 }
 
 export interface ExerciseResponseDTO {
+    id: string;
     title: string;
     description: string;
     video_url: string;

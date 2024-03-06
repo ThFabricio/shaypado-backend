@@ -31,6 +31,7 @@ export class ExerciseService {
 
         const exercise = await this.exerciseRepository.save(newExercise);
         return {
+            id: exercise.id,
             title: exercise.title,
             description: exercise.description,
             video_url: exercise.video_url,
@@ -72,6 +73,7 @@ export class ExerciseService {
         const exercises = await this.exerciseRepository.find({ where: { user: { id: userId } }, relations: ['workoutTypes'] });
         return exercises.map(exercise => {
             return {
+                id: exercise.id,
                 title: exercise.title,
                 description: exercise.description,
                 video_url: exercise.video_url,
@@ -107,6 +109,7 @@ export class ExerciseService {
         }));
         return exercises.map(exercise => {
             return {
+                id: exercise.id,
                 title: exercise.title,
                 description: exercise.description,
                 video_url: exercise.video_url,
