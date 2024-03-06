@@ -74,7 +74,11 @@ export const login = async (req: Request, res: Response) => {
     try {
         const user = await userService.login(email, password);
         if (user) {
-            res.json(user);
+            if (user.message === 'Invalid email or password') {
+                res.status(400).json(user);
+            } else {
+                res.json(user);
+            }
         } else {
             res.status(404).json({ error: 'User not found' });
         }
