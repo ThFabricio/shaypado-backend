@@ -29,3 +29,9 @@ export interface acessTokenDTO {
     email: string;
     userType: string;
 };
+
+export interface userDTO {
+    name: string;
+    email: string;
+    friendship_code: string;
+}

@@ -8,11 +8,13 @@ import {    createTrainerProfile,
             uploadDoc, 
             associateProfilePicture,
             associatePlansDocument,
-            createStudentProfile } from '../controllers/TrainerProfileController';
-import { TrainerProfileMiddelwares } from '../middlewares/TrainerProfileMiddelwares';
+            createStudentProfile,
+            trainerProfileById } from '../controllers/TrainerProfileController';
 import { uploadImage, uploadDocument } from  '../shared/Multer';
+import { AuthenticationValidation } from '../middlewares/AuthenticationMiddleware';
 
 const router = Router();
+const authValidator = new AuthenticationValidation();
 
 router.post(
     '/',
@@ -25,8 +27,20 @@ router.post(
         }
     }
 );
-router.get('/', getAllTrainerProfiles);
-router.get('/:id', getTrainerProfileById);
+router.get('/list-all-trainer', getAllTrainerProfiles);
+router.get('/trainerProfiler',
+            trainerProfileById);
+
+router.get('/', 
+            authValidator.validateToken,
+            async (req, res, next) => {
+                try {
+                    await trainerProfileById(req, res);
+                } catch (error) {
+                    next(error);
+                }
+            }
+);
 router.put('/:id', updateTrainerProfile);
 router.delete('/:id', deleteTrainerProfile);
 

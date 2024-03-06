@@ -6,7 +6,6 @@ import { Workout } from "../database/entities/Workout";
 
 export class ClassService {
     private classRepository = AppDataSource.getRepository(Class);
-    private userRepository = AppDataSource.getRepository(User);
     private workoutRepository = AppDataSource.getRepository(Workout);
 
     async createClass(classData: ClassDTO): Promise<Class> {
@@ -49,5 +48,21 @@ export class ClassService {
             return true;
         }
         return false;
+    }
+    
+    async studentAboutToJoinClass(userId: string, classId: string): Promise<Class | null> {
+        const class_ = await this.classRepository.findOne({ where: { id: classId } });
+        // achando o usuario
+        const user = await AppDataSource.getRepository(User).findOne({ where: { id: userId } });
+        if (class_ && user) {
+            if (user.userType === 'student') {
+                if (class_.friends_code.includes(user.friendship_code? user.friendship_code : '')) {
+                    return class_;
+                }
+
+            }
+
+        }
+        return null;
     }
 }

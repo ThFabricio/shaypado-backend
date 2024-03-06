@@ -42,16 +42,36 @@ export const createTrainerProfile = async (req: Request, res: Response) => {
 export const getAllTrainerProfiles = async (req: Request, res: Response) => {
     try {
         const trainerProfiles = await trainerProfileService.getAllTrainerProfiles();
-        res.json(trainerProfiles);
+        const listTrainerProfilesDTO = trainerProfiles.map(trainerProfile => {
+            return {
+                id: trainerProfile.id,
+                full_name: trainerProfile.full_name,
+                contact_email: trainerProfile.contact_email,
+                contact_phone: trainerProfile.contact_phone,
+                specialties: trainerProfile.specialties,
+                age: trainerProfile.age,
+                state: trainerProfile.state,
+                city: trainerProfile.city,
+                work_location: trainerProfile.work_location,
+                profilePicture: trainerProfile.profilePicture,
+                plansDocument: trainerProfile.plansDocument,
+                user: {
+                    name: trainerProfile.user?.name,
+                    email: trainerProfile.user?.email,
+                    friendship_code: trainerProfile.user?.friendship_code
+                }
+            }
+        });
+        res.json({ trainerProfiles: listTrainerProfilesDTO });
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch trainer profiles' });
     }
 }
 
 export const getTrainerProfileById = async (req: Request, res: Response) => {
-    const profileId = req.params.id;
+    const profileId = req.headers.profileId as string;
     try {
-        const trainerProfile = await trainerProfileService.getTrainerProfileById(profileId);
+        const trainerProfile = await trainerProfileService.getTrainnerProfileByUserId(profileId);
         if (trainerProfile) {
             res.json(trainerProfile);
         } else {
@@ -60,6 +80,21 @@ export const getTrainerProfileById = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch trainer profile' });
     }
+}
+
+export const trainerProfileById = async (req: Request, res: Response) => {
+    const profileId = req.body.profileId;
+    try {
+        const trainerProfile = await trainerProfileService.trainerProfileById(profileId);
+        if (trainerProfile) {
+            res.json(trainerProfile);
+        } else {
+            res.status(404).json({ error: 'Trainer profile not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch trainer profile' });
+    }
+
 }
 
 export const updateTrainerProfile = async (req: Request, res: Response) => {

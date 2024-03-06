@@ -51,7 +51,15 @@ export class TrainerProfileService {
         return await this.trainerProfileRepository.find({ relations: ["user"] });
     }
 
-    async getTrainerProfileById(profileId: string): Promise<any | null> {
+    async getTrainnerProfileByUserId(userId: string): Promise<any> {
+        const trainerProfile = await this.trainerProfileRepository.findOne({ where: { id: userId }, relations: ["user", "profilePicture", "plansDocument"] });
+        if (trainerProfile) {
+            return trainerProfile;
+        }
+        return null;
+    }
+
+    async trainerProfileById(profileId: string): Promise<any | null> {
         const trainerProfile = await this.trainerProfileRepository.findOne({ where: { id: profileId }, relations: ["user", "profilePicture", "plansDocument"] });
         if (trainerProfile) {
             const user = trainerProfile.user;
