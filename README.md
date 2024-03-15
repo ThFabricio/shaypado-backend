@@ -1,6 +1,6 @@
 # Shaypado Backend
 
-##API
+## API
 Com o propósito de integrar-se ao frontend, essa api é responsável pelas regras de negócio do sistema shaypado.
 
 A API foi criada utilizando as tecnologias Typescript e o banco de dados Postgresql, que ao se integrar aos sistemas, web e mobile, se responsabiliza por manipular os dados e realizar toda a lógica do sistema
