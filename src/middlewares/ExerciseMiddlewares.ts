@@ -28,12 +28,6 @@ export class ExerciseMiddlewares {
         next();
     }
 
-    //flag admin
-    //user e no user type eu vou passar admin 
-    //o admin já consegue cadastrar um treino
-    // se o treino fro cadastrado por um admin 
-    //esse treino é pré pronto 
-    //listar esse treino pré pronto 
     public validateUpdateExercise: RequestHandler = async (req, res, next) => {
         const schema = Joi.object({
             name: Joi.string().trim().optional(),
