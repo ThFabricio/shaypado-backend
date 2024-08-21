@@ -4,8 +4,7 @@
    "description": "",
    "main": "index.js",
    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "ts-node-dev src/app.ts",
+      "start": "ts-node src/app.ts",
       "typeorm": "typeorm-ts-node-commonjs"
    },
    "keywords": [],
@@ -41,8 +40,8 @@
       "uuid": "^9.0.1"
    },
    "engines": {
-      "node": ">=14.0.0",
-      "npm": ">=6.0.0"
+      "node": ">=22.2.0",
+      "npm": ">=10.8.2"
    }
    
 }
