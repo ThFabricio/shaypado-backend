@@ -5,6 +5,7 @@ services:
     build: .
     ports:
       - "3000:3000"
+    men_limit: 128M
     environment:
       - NODE_ENV=development
       - DATABASE_HOST=db
@@ -19,6 +20,7 @@ services:
     image: postgres:15
     ports:
       - "5432:5432"
+    men_limit: 128M
     environment:
       - POSTGRES_DB=shaypado-db
       - POSTGRES_USER=postgres
