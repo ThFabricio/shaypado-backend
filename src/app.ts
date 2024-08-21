@@ -5,7 +5,7 @@ import { AppDataSource } from "./database/data-source";
 
 
 const app: Application = express();
-const port: String = process.env.PORT || "3001";
+const port: String = process.env.PORT || "3000";
 
 app.use(express.json({ limit: "2mb"}));
 app.use(router);
@@ -17,6 +17,10 @@ AppDataSource.initialize().then(() => {
     });
 }).catch((error) => {
     console.log(error);
+});
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
 
 export default app;
